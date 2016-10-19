@@ -1,0 +1,176 @@
+<meta charset="UTF-8">
+<html ng-app="manutencaoEventos">
+<head>
+  <title>Manutenção de Eventos</title>
+  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
+  <style>
+    .jumbotron{
+        width: 900px;
+        text-align: center;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 50px;
+    }
+    .table{
+        margin-top: 20px;
+        border-collapse: separate;
+        border-spacing: 3px;
+        width: 850px;
+        margin-left: 25px;
+    }
+    .form-control {
+        margin-bottom: 5px;
+    }
+    .selecionado > td{
+        background-color: yellow;
+    }
+    .negrito{
+        font-weight: bold;
+    }
+    /* marca a primeira linha da tabela com a cor desejada*/
+    .table-striped > tbody > tr:first-child > th{
+        background-color: green;
+        border-radius: 5px;
+        padding: 5px;
+        color: white;
+    }
+    .busca{
+        width: 850px;
+        margin-left: 25px;
+    }
+
+    .classOrdem{
+	text-decoration:none;
+    color: white;
+
+	}
+    a:hover {
+	text-decoration: none ; 
+	color: white; 
+	}
+    
+  </style>
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-messages/angular-messages.js"></script>
+  <script>
+      angular.module('manutencaoEventos', ['ngMessages']);
+      angular.module('manutencaoEventos').controller('manutencaoEventosCtrl',function($scope){
+          $scope.app = 'Manutenção de Eventos'
+          $scope.eventos = [
+              {date: new Date(2016,9,11) , type: {eventType: "Pagamento de Juros", id: 1, isFinal: "NÃO"}, isIncorporaJuros: false, isRemove: false },
+              {date: new Date(2012,9,11) , type: {eventType: "Vencimento (Resgate)", id: 2, isFinal: "SIM"}, isIncorporaJuros: true, isRemove: false },
+              {date: new Date(2011,9,11) , type: {eventType: "Pagamento de Amortização", id: 3, isFinal: "NÃO"}, isIncorporaJuros: false, isRemove: false }
+          ];
+
+          $scope.tiposDeEventos = [
+              {eventType : "Pagamento de Juros" , id: 1, isFinal: "NÃO" },
+              {eventType : "Vencimento (Resgate)" , id: 2, isFinal: "SIM" },
+              {eventType : "Pagamento de Amortização", id: 3, isFinal: "NÃO" }
+          ];
+
+           $scope.addEvent = function (evento){
+                console.log(evento.date);
+                console.log(evento.type);
+                $scope.eventos.push(evento); //adiciona o objeto no array
+                delete $scope.evento; //deleta o evento
+                $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
+            };
+            //retorna os eventos que não foram marcados para remoção utilizando filter
+            $scope.removeEvents = function (eventos){
+                $scope.eventos =  
+                eventos.filter(function (evento){
+                    if (!evento.isRemove) return evento;
+                });
+            };
+
+            //Se existir algum evento para ser removido mostra o botão de apagar 
+            $scope.isSelectedEvent = function (eventos) {
+                return eventos.some(function (evento){
+                    return evento.isRemove;
+                }); 
+            }
+            $scope.orderBy = function (campo) {
+				$scope.criteryOrder = campo;
+				$scope.directionOrder = !$scope.directionOrder;
+            };
+      });
+      
+     
+  </script>  
+</head>    
+<body ng-controller="manutencaoEventosCtrl">
+    <div class="jumbotron">
+        <!--h4 ng-bind="app"></h4-->
+        <h3>{{app}}</h3>
+        <!-- valida se o campo foi preenchido, utiliza required e dirty que mostra a mensagem caso campo seja apagado-->
+        <div ng-show="manutencaoEventosForm.date.$error.required && manutencaoEventosForm.date.$dirty" class="alert alert-danger">Preencha o campo data original</div>
+        <!-- valida se o campo tem o minimo de caracteres pedido na tag ng-minlength, existe também o campo ng-maxlength para verificar o maximo de caracteres -->
+        <div ng-show="manutencaoEventosForm.date.$error.minlength" class="alert alert-danger">Campo data deve ter o formato dd/mm/yyyy</div>
+        <!-- valida se regex /^\d{2}\/\d{2}\/\d{4}$/, significado do regex sempre tem // no inicio e fim.
+        ^ - começa
+        \d(digitos)
+        {2} quantidade de caracteres, dependendo pode ser um range {2,3} - signica que vai de 2 a 3 digitos.
+        \/ - uma barra.
+        ... repito modificando as quantidades.
+        $ - significa que terminou e não pode haver mais nada depois.        
+        -->
+        <div ng-show="manutencaoEventosForm.date.$error.pattern" class="alert alert-danger">Campo data deve ter o formato brasileiro de dd/mm/yyyy - regex validation</div>
+        
+        <!-- forma de validacao usando ngMessages para agrupar varias mensagens referentes ao mesmo campo, 
+        importar o angular-messages.js e referenciar o modulo angular.module('manutencaoEventos', ['ngMessages']);-->
+        <div ng-messages="manutencaoEventosForm.type.$error" ng-show="manutencaoEventosForm.type.$dirty" ng-class="{'alert alert-danger' : manutencaoEventosForm.type.$invalid}" role="alert">
+            <div ng-message="required" >Selecione o Tipo de Evento</div>    
+        </div>
+        <!-- forma de validacao usando $invalid e $valid.-->
+        <div ng-show="manutencaoEventosForm.isIncorporaJuros.$invalid && manutencaoEventosForm.isIncorporaJuros.$dirty" class="alert alert-danger">Preencha o campo indicando se incorpora juros</div>
+        
+        <input type="text" class="form-control busca" name="criterio" ng-model="criterio" placeholder="Busca por qualquer coluna?" />
+        <input type="text" class="form-control busca" name="criterioTipo" ng-model="criterioTipo" placeholder="Busca somente por tipo de evento?" />
+        
+        <table class="table table-striped" ng-show="eventos.length > 0">
+            <tr>
+                <th><a class="classOrdem" ng-click="orderBy('date')">Data Original</a></th>
+                <th><a class="classOrdem" ng-click="orderBy('type.eventType')"> Tipo Evento</a></th>
+                <th>Incorpora Juros?</th>
+                <th>Excluir?</th>
+            </tr>
+            <!-- O primeiro filtro, filtra tudo dentro de evento. 
+                 O segundo filtro, filtra um atributo dentro de um objeto que esta dentro de outro objeto exemplo evento tem um objeto type que tem seus atributos.  -->
+            <tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterio | filter:{type:{eventType:criterioTipo}} | orderBy:criteryOrder:directionOrder">
+            <td>{{evento.date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{evento.type.eventType | uppercase}}</td>
+            <td>{{evento.isIncorporaJuros}}</td>
+            <td><input type="checkbox" ng-model="evento.isRemove"></input></td>
+            </tr>
+        </table> 
+        <hr/>
+        <form name="manutencaoEventosForm">
+        <table class="table">
+            <tr>
+            <td><input class="form-control" type="text" ng-model="evento.date" name="date" ng-required="true" ng-minlength="10" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/"/></td>
+            <td><!--select class="form-control" ng-model="evento.type" ng-options="tipoDeEvento.eventType group by tipoDeEvento.isFinal for tipoDeEvento in tiposDeEventos" >
+                    <option value="">--- Selecione um evento ---</option>
+                </select-->
+                <select class="form-control" ng-model="evento.type" name="type" ng-options="tipoDeEvento.eventType for tipoDeEvento in tiposDeEventos | orderBy:'eventType'" ng-required="true">
+                    <option value="">--- Selecione um evento ---</option>
+                </select>
+            </td>
+            <td><input class="form-control" type="text" ng-model="evento.isIncorporaJuros" name="isIncorporaJuros" ng-required="true"/></td>
+            <td>&nbsp;</td>
+            </tr>
+        </table>
+        </form>
+        <button class="btn btn-primary" ng-click="addEvent(evento)" ng-disabled="!evento.date || !evento.type">Adicionar Evento</button>
+        <button class="btn btn-danger" ng-click="removeEvents(eventos)" ng-show="isSelectedEvent(eventos)" >Apagar Eventos</button>
+    </div>
+    <div ng-include="'views/footer.html'">
+        <!--
+            filtros: 
+            number ex:(100 | number, 100 | number:2 -> casas decimais), 
+            currency -> é possivel baixar o angular-locale e depois importar o script.
+            limitTo:3 - limita o numero de caracteres em uma string
+
+        -->
+    </div>
+</body>    
+</html>

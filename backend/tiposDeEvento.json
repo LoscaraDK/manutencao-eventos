@@ -1,0 +1,5 @@
+[
+    {"eventType" : "Pagamento de Juros" , "id": 1, "isFinal": "NÃO" },
+    {"eventType" : "Vencimento (Resgate)" , "id": 2, "isFinal": "SIM" },
+    {"eventType" : "Pagamento de Amortização", "id": 3, "isFinal": "NÃO" }
+]

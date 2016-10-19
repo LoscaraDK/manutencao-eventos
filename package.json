@@ -1,0 +1,27 @@
+{
+  "name": "manutencao-eventos",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Prototipo para função para manutenção de eventos usando angular",
+  "main": "manutencao-eventos.js",
+  "scripts": {
+    "test": "echo \"Error: no test especified\" && exit 1"
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-locale": "^0.3.1",
+    "angular-material": "^1.1.1",
+    "angular-messages": "^1.5.8",
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "consolidate": "^0.14.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "jsonfile": "^2.4.0",
+    "method-override": "^2.3.6",
+    "morgan": "^1.7.0",
+    "multer": "^1.2.0"
+  }
+}

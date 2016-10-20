@@ -1,85 +1,155 @@
-
 <html ng-app="manutencaoEventos">
+
 <head>
-  <title>Manutenção de Eventos</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="node_modules/angular-material/angular-material.min.css">
-  <style>
-    .container{
-         margin-top: 50px;
-    }
-    
-    .panel-default{
-        border-color: black;
-    }
-    .panel-default > .panel-heading{
-        background: #009846 none repeat scroll 0 0;
-        color:white;
-        font-weight: bold;
-        font-size: 18px;
-    }
+	<title>Manutenção de Eventos</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="node_modules/angular-material/angular-material.min.css">
+	<link rel="stylesheet" type="text/css" href="node_modules/mdPickers/dist/mdPickers.min.css">
 
-    .panel-footer{
-        background: #009846 none repeat scroll 0 0;
-    }
+	<style>
+		.container {
+			margin-top: 50px;
+		}
+		
+		.panel-default {
+			border-color: black;
+		}
+		
+		.panel-default > .panel-heading {
+			background: #009846 none repeat scroll 0 0;
+			color: white;
+			font-weight: bold;
+			font-size: 18px;
+		}
+		
+		.panel-footer {
+			background: #009846 none repeat scroll 0 0;
+		}
+		
+		.btn-primary {
+			background-color: #004e69;
+			border-color: #004e69;
+			color: #fff;
+		}
+		
+		.btn-block {
+			text-align: center;
+		}
+		
+		.table {
+			margin-top: 20px;
+			border-collapse: separate;
+			border-spacing: 3px;
+		}
+		
+		.form-control {
+			margin-bottom: 5px;
+		}
+		
+		.selecionado > td {
+			background: #009846 none repeat scroll 0 0;
+		}
+		
+		.negrito {
+			font-weight: bold;
+		}
+		/* marca a primeira linha da tabela com a cor desejada*/
+		
+		.table-striped > tbody > tr:first-child > th {
+			background: #009846 none repeat scroll 0 0;
+			border-radius: 5px;
+			padding: 5px;
+			color: white;
+		}
+		
+		.classOrdem {
+			text-decoration: none;
+			color: white;
+		}
+		
+		a:hover {
+			text-decoration: none;
+			color: white;
+		}
 
-    .btn-primary {
-        background-color: #004e69;
-        border-color: #004e69;
-        color: #fff;
-    }
+        .mdp-calendar-monthyear, .mdp-datepicker-year, .mdp-calendar-week-days, .md-icon-button, .mdp-calendar-days .md-button {
+            font-size: 15px;
+        }
 
-    .btn-block{
-       text-align: center;
-    }
+        .tamanho-calendario{
+            max-width: 50px;
+            margin-top: 10px;
+        }
+	</style>
+	<script src="node_modules/angular/angular.min.js"></script>
+	<script src="node_modules/angular-messages/angular-messages.min.js"></script>
+	<script src="node_modules/angular-material/angular-material.min.js"></script>
+	<script src="node_modules/angular-aria/angular-aria.min.js"></script>
+	<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+	<script src="node_modules/moment/min/moment.min.js"></script>
+	<script src="node_modules/moment/locale/pt-br.js"></script>
+	<script src="node_modules/mdPickers/dist/mdPickers.min.js"></script>
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<!--script src="i18n/angular-locale_pt-br.js"></script-->
 
-    .table{
-        margin-top: 20px;
-        border-collapse: separate;
-        border-spacing: 3px;
-        
-    }
-    .form-control {
-        margin-bottom: 5px;
-    }
-    .selecionado > td{
-        background: #009846 none repeat scroll 0 0;
-    }
-    .negrito{
-        font-weight: bold;
-    }
-    /* marca a primeira linha da tabela com a cor desejada*/
-    .table-striped > tbody > tr:first-child > th{
-        background: #009846 none repeat scroll 0 0;
-        border-radius: 5px;
-        padding: 5px;
-        color: white;
-    }
-   
-    .classOrdem{
-        text-decoration:none;
-        color: white;
+	<script>
+      angular.module('manutencaoEventos', [ "ngMaterial",
+                                            "ngAnimate",
+                                            "ngAria",
+                                            "ngMessages",
+                                            "mdPickers"]);
+                                  
+      
+      angular.module('manutencaoEventos').config(function($mdDateLocaleProvider) {
+                moment.updateLocale('pt-br',null);
+                
+                $mdDateLocaleProvider.months = moment.months();
+                $mdDateLocaleProvider.shortMonths =  moment.monthsShort();
+                $mdDateLocaleProvider.days = moment.weekdays();
+                $mdDateLocaleProvider.shortDays = moment.weekdaysShort();
+               
+                $mdDateLocaleProvider.formatDate = function(date) {                    
+                    return moment(date).format('DD/MM/YYYY');
+                };                
+      });
 
-	}
-    a:hover {
-        text-decoration: none ; 
-        color: white; 
-	}
-    
-    
-  </style>
-  <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/angular-messages/angular-messages.min.js"></script>
-  <script src="node_modules/angular-material/angular-material.min.js"></script>
-  <script src="node_modules/angular-aria/angular-aria.min.js"></script>
-  <script src="node_modules/angular-animate/angular-animate.min.js"></script>
-  <script src="node_modules/i18n/angular-locale_pt-br.js"></script>
-  
-  <script>
-      angular.module('manutencaoEventos', ['ngMessages','ngMaterial']);
-      angular.module('manutencaoEventos').controller('manutencaoEventosCtrl',function($scope,$http){
+     //  angular.module('manutencaoEventos').controller("MainCtrl",  function($scope, $mdpDatePicker, $mdpTimePicker, Scopes){
+     //           Scopes.store('MainCtrl', $scope);
+   //             
+                //$scope.criterioDate = null;
+                //Scopes.get('manutencaoEventosCtrl').criterioDate = $scope.criterioDate; 
+                //console.log(Scopes.get('manutencaoEventosCtrl').criterioDate); 
+                
+         //       $scope.currentDate = new Date();
+       //         this.showDatePicker = function(ev) {
+          //          $mdpDatePicker($scope.currentDate, {
+         //           targetEvent: ev
+        //        }).then(function(selectedDate) {
+          //          $scope.currentDate = selectedDate;
+                    //Scopes.get('manutencaoEventosCtrl').criterioDate =  moment(selectedDate).format('DD/MM/YYYY');
+                    //console.log(Scopes.get('manutencaoEventosCtrl').criterioDate);
+           //     });;
+           //     };
+                
+           //     this.filterDate = function(date) {
+            //    return moment(date).date() % 2 == 0;
+           //     };
+                
+            //    this.showTimePicker = function(ev) {
+             //       $mdpTimePicker($scope.currentTime, {
+             //       targetEvent: ev
+             //   }).then(function(selectedDate) {
+             //       $scope.currentTime = selectedDate;
+             //   });;
+             //   }  
+          //  });
+
+      angular.module('manutencaoEventos').controller('manutencaoEventosCtrl',function($scope,$http,$mdpDatePicker, $mdpTimePicker){
+           //Scopes.store('manutencaoEventosCtrl', $scope);
+            
+            //console.log(Scopes.get('MainCtrl').criterioDate); 
           //$scope.app = 'Manutenção de Eventos'
           $scope.eventos = [];
 
@@ -131,38 +201,69 @@
 				$scope.criteryOrder = campo;
 				$scope.directionOrder = !$scope.directionOrder;
             };
+                
+                $scope.criterioDate = null;
+                $scope.currentDate = new Date();
+                $scope.showDatePicker = function(ev) {
+                    console.log(ev);
+                    $mdpDatePicker($scope.currentDate, {
+                    targetEvent: ev
+                }).then(function(selectedDate) {
+                    $scope.currentDate = selectedDate;
+                    $scope.criterioDate = moment(selectedDate).format('DD/MM/YYYY');;
+                });;
+                };
+                
+                $scope.filterDate = function(date) {
+                return moment(date).date() % 2 == 0;
+                };
+                
+                $scope.showTimePicker = function(ev) {
+                    $mdpTimePicker($scope.currentTime, {
+                    targetEvent: ev
+                }).then(function(selectedDate) {
+                    $scope.currentTime = selectedDate;
+                });;
+                } ; 
+
 
             carregarEventos();
             carregarTiposDeEventos();
             
-            //Teste date alterar variaveis
-            $scope.myDate = new Date();
-            $scope.minDate = new Date(
-            $scope.myDate.getFullYear(),
-            $scope.myDate.getMonth() - 2,
-            $scope.myDate.getDate());
-
-            $scope.maxDate = new Date(
-            $scope.myDate.getFullYear(),
-            $scope.myDate.getMonth() + 2,
-            $scope.myDate.getDate());
+                
             });
-      
-     
-  </script>  
-</head>    
+         
+            
+           
+
+            //angular.module('manutencaoEventos').factory('Scopes', function ($rootScope) {
+            //    var mem = {};
+            
+           //     return {
+            //        store: function (key, value) {
+              //          mem[key] = value;
+            //        },
+              //      get: function (key) {
+              //          return mem[key];
+              //      }
+              //  };
+           // });
+           
+  </script>
+</head>
+
 <body ng-controller="manutencaoEventosCtrl">
-<div class="container">    
-<div class="panel panel-default">    
-<div class="panel-heading">Manutenção de Eventos</div>
-    <div class="panel-body">
-        <!--h4 ng-bind="app"></h4-->
-        
-        <!-- valida se o campo foi preenchido, utiliza required e dirty que mostra a mensagem caso campo seja apagado-->
-        <div ng-show="manutencaoEventosForm.date.$error.required && manutencaoEventosForm.date.$dirty" class="alert alert-danger">Preencha o campo data original</div>
-        <!-- valida se o campo tem o minimo de caracteres pedido na tag ng-minlength, existe também o campo ng-maxlength para verificar o maximo de caracteres -->
-        <div ng-show="manutencaoEventosForm.date.$error.minlength" class="alert alert-danger">Campo data deve ter o formato dd/mm/yyyy</div>
-        <!-- valida se regex /^\d{2}\/\d{2}\/\d{4}$/, significado do regex sempre tem // no inicio e fim.
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">Manutenção de Eventos</div>
+			<div class="panel-body">
+				<!--h4 ng-bind="app"></h4-->
+
+				<!-- valida se o campo foi preenchido, utiliza required e dirty que mostra a mensagem caso campo seja apagado-->
+				<div ng-show="manutencaoEventosForm.date.$error.required && manutencaoEventosForm.date.$dirty" class="alert alert-danger">Preencha o campo data original</div>
+				<!-- valida se o campo tem o minimo de caracteres pedido na tag ng-minlength, existe também o campo ng-maxlength para verificar o maximo de caracteres -->
+				<div ng-show="manutencaoEventosForm.date.$error.minlength" class="alert alert-danger">Campo data deve ter o formato dd/mm/yyyy</div>
+				<!-- valida se regex /^\d{2}\/\d{2}\/\d{4}$/, significado do regex sempre tem // no inicio e fim.
         ^ - começa
         \d(digitos)
         {2} quantidade de caracteres, dependendo pode ser um range {2,3} - signica que vai de 2 a 3 digitos.
@@ -170,70 +271,86 @@
         ... repito modificando as quantidades.
         $ - significa que terminou e não pode haver mais nada depois.        
         -->
-        <div ng-show="manutencaoEventosForm.date.$error.pattern" class="alert alert-danger">Campo data deve ter o formato brasileiro de dd/mm/yyyy - regex validation</div>
-        
-        <!-- forma de validacao usando ngMessages para agrupar varias mensagens referentes ao mesmo campo, 
+				<div ng-show="manutencaoEventosForm.date.$error.pattern" class="alert alert-danger">Campo data deve ter o formato brasileiro de dd/mm/yyyy - regex validation</div>
+
+				<!-- forma de validacao usando ngMessages para agrupar varias mensagens referentes ao mesmo campo, 
         importar o angular-messages.js e referenciar o modulo angular.module('manutencaoEventos', ['ngMessages']);-->
-        <div ng-messages="manutencaoEventosForm.type.$error" ng-show="manutencaoEventosForm.type.$dirty" ng-class="{'alert alert-danger' : manutencaoEventosForm.type.$invalid}" role="alert">
-            <div ng-message="required" >Selecione o Tipo de Evento</div>    
-        </div>
-        <!-- forma de validacao usando $invalid e $valid.>
+				<div ng-messages="manutencaoEventosForm.type.$error" ng-show="manutencaoEventosForm.type.$dirty" ng-class="{'alert alert-danger' : manutencaoEventosForm.type.$invalid}"
+					role="alert">
+					<div ng-message="required">Selecione o Tipo de Evento</div>
+				</div>
+				<!-- forma de validacao usando $invalid e $valid.>
         <div ng-show="manutencaoEventosForm.isIncorporaJuros.$invalid && manutencaoEventosForm.isIncorporaJuros.$dirty" class="alert alert-danger">Preencha o campo indicando se incorpora juros</div-->
-        
-        <input type="text" class="form-control busca" name="criterio" ng-model="criterio" placeholder="Busca por qualquer coluna?" />
-        <input type="text" class="form-control busca" name="criterioTipo" ng-model="criterioTipo" placeholder="Busca somente por tipo de evento?" />
-        
-        <table class="table table-striped" ng-show="eventos.length > 0">
-            <tr>
-                <th><a class="classOrdem" ng-click="orderBy('date')">Data Original</a></th>
-                <th><a class="classOrdem" ng-click="orderBy('type.eventType')"> Tipo Evento</a></th>
-                <th>Incorpora Juros?</th>
-                <th>Excluir?</th>
-            </tr>
-            <!-- O primeiro filtro, filtra tudo dentro de evento. 
+
+				<input type="text" class="form-control busca" name="criterio" ng-model="criterio" placeholder="Busca por qualquer coluna?"/>
+				<input type="text" class="form-control busca" name="criterioTipo" ng-model="criterioTipo" placeholder="Busca somente por tipo de evento?"/>
+
+				<!--div ng-controller="MainCtrl as ctrl"-->
+                <div>
+					<p>
+						 <img ng-src="img/calendario.png" name="criterioDate" ng-model="criterioDate" ng-click="showDatePicker($event)" class="tamanho-calendario" alt="Description" />
+					</p>
+                    <p>
+                        {{ currentDate | date:'dd/MM/yyyy' }}
+                    </p>
+				</div>
+                
+				<table class="table table-striped" ng-show="eventos.length > 0">
+					<tr>
+						<th><a class="classOrdem" ng-click="orderBy('date')">Data Original</a></th>
+						<th><a class="classOrdem" ng-click="orderBy('type.eventType')"> Tipo Evento</a></th>
+						<th>Incorpora Juros?</th>
+						<th>Excluir?</th>
+					</tr>
+					<!-- O primeiro filtro, filtra tudo dentro de evento. 
                  O segundo filtro, filtra um atributo dentro de um objeto que esta dentro de outro objeto exemplo evento tem um objeto type que tem seus atributos.  -->
-            <tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterio | filter:{type:{eventType:criterioTipo}} | orderBy:criteryOrder:directionOrder">
-            <td>{{evento.date | date: 'dd/MM/yyyy'}}</td>
-            <td>{{evento.type.eventType | uppercase}}</td>
-            <td><input type="checkbox" ng-model="evento.isIncorporaJuros" class="checkbox"></input></td>
-            <td><input type="checkbox" ng-model="evento.isRemove" class="checkbox"></input></td>
-            </tr>
-            
-            <form name="manutencaoEventosForm">
-            <tr class="active">
-            <td><!--input class="form-control" type="text" ng-model="evento.date" name="date" ng-required="true" ng-minlength="10" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/"/-->
-                <!--md-datepicker ng-model="evento.date" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker-->
-                <md-datepicker ng-model="evento.date" md-placeholder="Entre uma data!" ng-required="true" ></md-datepicker>
-            </td>
-            <td><!--select class="form-control" ng-model="evento.type" ng-options="tipoDeEvento.eventType group by tipoDeEvento.isFinal for tipoDeEvento in tiposDeEventos" >
+					<tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterioDate.toString() | filter:criterio | filter:{type:{eventType:criterioTipo}} | orderBy:criteryOrder:directionOrder">
+						<td>{{evento.date | date: 'dd/MM/yyyy'}}</td>
+						<td>{{evento.type.eventType | uppercase}}</td>
+						<td><input type="checkbox" ng-model="evento.isIncorporaJuros" class="checkbox"></input>
+						</td>
+						<td><input type="checkbox" ng-model="evento.isRemove" class="checkbox"></input>
+						</td>
+					</tr>
+
+					<form name="manutencaoEventosForm">
+						<tr class="active">
+							<td>
+								<!--input class="form-control" type="text" ng-model="evento.date" name="date" ng-required="true" ng-minlength="10" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/"/-->
+								<!--md-datepicker ng-model="evento.date" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker-->
+								<md-datepicker ng-model="evento.date" md-placeholder="Entre uma data!" ng-required="true"></md-datepicker>
+							</td>
+							<td>
+								<!--select class="form-control" ng-model="evento.type" ng-options="tipoDeEvento.eventType group by tipoDeEvento.isFinal for tipoDeEvento in tiposDeEventos" >
                     <option value="">--- Selecione um evento ---</option>
                 </select-->
-                <select class="form-control" ng-model="evento.type" name="type" ng-options="tipoDeEvento.eventType for tipoDeEvento in tiposDeEventos | orderBy:'eventType'" ng-required="true">
+								<select class="form-control" ng-model="evento.type" name="type" ng-options="tipoDeEvento.eventType for tipoDeEvento in tiposDeEventos | orderBy:'eventType'"
+									ng-required="true">
                     <option value="">--- Selecione um evento ---</option>
                 </select>
-            </td>
-            <td><input class="checkbox" type="checkbox" ng-model="evento.isIncorporaJuros" name="isIncorporaJuros" /></td>
-            <td>&nbsp;</td>
-            </tr>
-            </form>
-        </table> 
-    
-        <div class="panel-footer btn-block">
-            <button class="btn btn-primary" ng-click="addEvent(evento)" ng-disabled="!evento.date || !evento.type" >Adicionar Evento</button>
-            <button class="btn btn-danger" ng-click="removeEvents(eventos)" ng-show="isSelectedEvent(eventos)" >Apagar Eventos</button>
-        </div>
-    </div>
-    </div>
-    </div>
-    <div ng-include="'views/footer.html'">
-        <!--
+							</td>
+							<td><input class="checkbox" type="checkbox" ng-model="evento.isIncorporaJuros" name="isIncorporaJuros" /></td>
+							<td>&nbsp;</td>
+						</tr>
+					</form>
+				</table>
+
+				<div class="panel-footer btn-block">
+					<button class="btn btn-primary" ng-click="addEvent(evento)" ng-disabled="!evento.date || !evento.type">Adicionar Evento</button>
+					<button class="btn btn-danger" ng-click="removeEvents(eventos)" ng-show="isSelectedEvent(eventos)">Apagar Eventos</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-include="'views/footer.html'">
+		<!--
             filtros: 
             number ex:(100 | number, 100 | number:2 -> casas decimais), 
             currency -> é possivel baixar o angular-locale e depois importar o script.
             limitTo:3 - limita o numero de caracteres em uma string
 
         -->
-    </div>
-    
-</body>    
+	</div>
+</body>
+
 </html>

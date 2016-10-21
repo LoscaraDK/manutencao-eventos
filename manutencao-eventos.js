@@ -71,7 +71,6 @@ app.post('/manutencao-eventos/addEvent', function(req, res) {
   
   jsonfile.readFile(file, function(err, obj) {
     eventos = obj;
-    console.dir(eventos)
     eventos.push(req.body);
     // console.log(eventos);
     jsonfile.writeFile(file, eventos, {spaces: 2}, function(err) {

@@ -1,53 +1,5 @@
 [
   {
-    "date": "26/02/2016",
-    "type": {
-      "eventType": "Pagamento de Juros",
-      "id": 1,
-      "isFinal": "NÃO"
-    },
-    "isIncorporaJuros": false,
-    "isRemove": false
-  },
-  {
-    "date": "26/02/2013",
-    "type": {
-      "eventType": "Vencimento (Resgate)",
-      "id": 1,
-      "isFinal": "NÃO"
-    },
-    "isIncorporaJuros": false,
-    "isRemove": false
-  },
-  {
-    "date": "26/10/2016",
-    "type": {
-      "eventType": "Pagamento de Amortização",
-      "id": 3,
-      "isFinal": "NÃO"
-    },
-    "isIncorporaJuros": false
-  },
-  {
-    "date": "12/01/2015",
-    "type": {
-      "eventType": "Pagamento de Amortização",
-      "id": 3,
-      "isFinal": "NÃO"
-    },
-    "isIncorporaJuros": true,
-    "isRemove": false
-  },
-  {
-    "date": "2016-10-19T02:00:00.000Z",
-    "type": {
-      "eventType": "Pagamento de Juros",
-      "id": 1,
-      "isFinal": "NÃO"
-    },
-    "isIncorporaJuros": true
-  },
-  {
     "date": "2016-10-20T02:00:00.000Z",
     "type": {
       "eventType": "Pagamento de Amortização",
@@ -56,15 +8,31 @@
     }
   },
   {
+    "date": "2016-10-22T02:00:00.000Z",
+    "type": {
+      "eventType": "Pagamento de Juros",
+      "id": 1,
+      "isFinal": "NÃO"
+    }
+  },
+  {
+    "date": "2016-10-23T02:00:00.000Z",
     "type": {
       "eventType": "Pagamento de Amortização",
       "id": 3,
       "isFinal": "NÃO"
-    },
-    "date": "2016-10-19T02:00:00.000Z"
+    }
   },
   {
-    "date": "2016-10-20T02:00:00.000Z",
+    "date": "2016-10-25T02:00:00.000Z",
+    "type": {
+      "eventType": "Vencimento (Resgate)",
+      "id": 2,
+      "isFinal": "SIM"
+    }
+  },
+  {
+    "date": "2016-10-24T02:00:00.000Z",
     "type": {
       "eventType": "Pagamento de Juros",
       "id": 1,

@@ -79,7 +79,7 @@
         }
 
         .tamanho-calendario{
-            max-width: 50px;
+            max-width: 30px;
             margin-top: 10px;
         }
 	</style>
@@ -95,14 +95,14 @@
 	<!--script src="i18n/angular-locale_pt-br.js"></script-->
 
 	<script>
-      angular.module('manutencaoEventos', [ "ngMaterial",
+      var app = angular.module('manutencaoEventos', [ "ngMaterial",
                                             "ngAnimate",
                                             "ngAria",
                                             "ngMessages",
                                             "mdPickers"]);
                                   
       
-      angular.module('manutencaoEventos').config(function($mdDateLocaleProvider) {
+      app.config(function($mdDateLocaleProvider) {
                 moment.updateLocale('pt-br',null);
                 
                 $mdDateLocaleProvider.months = moment.months();
@@ -115,38 +115,7 @@
                 };                
       });
 
-     //  angular.module('manutencaoEventos').controller("MainCtrl",  function($scope, $mdpDatePicker, $mdpTimePicker, Scopes){
-     //           Scopes.store('MainCtrl', $scope);
-   //             
-                //$scope.criterioDate = null;
-                //Scopes.get('manutencaoEventosCtrl').criterioDate = $scope.criterioDate; 
-                //console.log(Scopes.get('manutencaoEventosCtrl').criterioDate); 
-                
-         //       $scope.currentDate = new Date();
-       //         this.showDatePicker = function(ev) {
-          //          $mdpDatePicker($scope.currentDate, {
-         //           targetEvent: ev
-        //        }).then(function(selectedDate) {
-          //          $scope.currentDate = selectedDate;
-                    //Scopes.get('manutencaoEventosCtrl').criterioDate =  moment(selectedDate).format('DD/MM/YYYY');
-                    //console.log(Scopes.get('manutencaoEventosCtrl').criterioDate);
-           //     });;
-           //     };
-                
-           //     this.filterDate = function(date) {
-            //    return moment(date).date() % 2 == 0;
-           //     };
-                
-            //    this.showTimePicker = function(ev) {
-             //       $mdpTimePicker($scope.currentTime, {
-             //       targetEvent: ev
-             //   }).then(function(selectedDate) {
-             //       $scope.currentTime = selectedDate;
-             //   });;
-             //   }  
-          //  });
-
-      angular.module('manutencaoEventos').controller('manutencaoEventosCtrl',function($scope,$http,$mdpDatePicker, $mdpTimePicker){
+      app.controller('manutencaoEventosCtrl',function($scope,$http,$mdpDatePicker, $mdpTimePicker){
            //Scopes.store('manutencaoEventosCtrl', $scope);
             
             //console.log(Scopes.get('MainCtrl').criterioDate); 
@@ -157,8 +126,7 @@
 
           var carregarEventos = function(){
               $http.get("/manutencao-eventos/eventos").success(function(data,status){
-                  $scope.eventos = data;
-                  
+                  $scope.eventos = data;                  
               });
           };
 
@@ -169,6 +137,7 @@
           };
 
            $scope.addEvent = function (evento){
+               console.log(evento);
                $http.post("/manutencao-eventos/addEvent",evento).success(function(data){
                    delete $scope.evento; //deleta o evento
                    $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
@@ -202,29 +171,36 @@
 				$scope.directionOrder = !$scope.directionOrder;
             };
                 
-                $scope.criterioDate = null;
-                $scope.currentDate = new Date();
-                $scope.showDatePicker = function(ev) {
-                    console.log(ev);
-                    $mdpDatePicker($scope.currentDate, {
+                $scope.startDate = null;
+                $scope.endDate = null;
+                
+                $scope.startDatePicker = function(ev) {
+                    $mdpDatePicker($scope.startDate, {
                     targetEvent: ev
                 }).then(function(selectedDate) {
-                    $scope.currentDate = selectedDate;
-                    $scope.criterioDate = moment(selectedDate).format('DD/MM/YYYY');;
+                    $scope.startDate = selectedDate;
+                });;
+                };
+
+                $scope.endDatePicker = function(ev) {
+                    $mdpDatePicker($scope.endDate, {
+                    targetEvent: ev
+                }).then(function(selectedDate) {
+                    $scope.endDate = selectedDate;
                 });;
                 };
                 
-                $scope.filterDate = function(date) {
-                return moment(date).date() % 2 == 0;
-                };
+               // $scope.filterDate = function(date) {
+               // return moment(date).date() % 2 == 0;
+                //};
                 
-                $scope.showTimePicker = function(ev) {
-                    $mdpTimePicker($scope.currentTime, {
-                    targetEvent: ev
-                }).then(function(selectedDate) {
-                    $scope.currentTime = selectedDate;
-                });;
-                } ; 
+               // $scope.showTimePicker = function(ev) {
+                //    $mdpTimePicker($scope.currentTime, {
+                //    targetEvent: ev
+               // }).then(function(selectedDate) {
+               //     $scope.currentTime = selectedDate;
+              // });;
+                //} ; 
 
 
             carregarEventos();
@@ -232,22 +208,26 @@
             
                 
             });
-         
-            
-           
-
-            //angular.module('manutencaoEventos').factory('Scopes', function ($rootScope) {
-            //    var mem = {};
-            
-           //     return {
-            //        store: function (key, value) {
-              //          mem[key] = value;
-            //        },
-              //      get: function (key) {
-              //          return mem[key];
-              //      }
-              //  };
-           // });
+                     
+            app.filter("searchDatesBetween", function($filter) {
+                return function(items, from, to) {
+                        var result = [];
+                        
+                        if(!from || !to)  {
+                            return items;
+                        }    
+                        
+                        var df = moment(from);
+                        var dt = moment(to);
+                        for (var i=0; i<items.length; i++){
+                            var tf = moment(items[i].date);
+                            if (tf > df && tf < dt)  {
+                                result.push(items[i]);
+                            }
+                        }            
+                        return result;
+                };
+            });
            
   </script>
 </head>
@@ -286,15 +266,18 @@
 				<input type="text" class="form-control busca" name="criterioTipo" ng-model="criterioTipo" placeholder="Busca somente por tipo de evento?"/>
 
 				<!--div ng-controller="MainCtrl as ctrl"-->
-                <div>
-					<p>
-						 <img ng-src="img/calendario.png" name="criterioDate" ng-model="criterioDate" ng-click="showDatePicker($event)" class="tamanho-calendario" alt="Description" />
-					</p>
-                    <p>
-                        {{ currentDate | date:'dd/MM/yyyy' }}
-                    </p>
-				</div>
-                
+                <div id = "container" style = "width:55%">
+                    <div id ="left" style = "float:left; width: 25%;">
+                        <img ng-src="img/calendario.png" name="startDate" ng-model="startDate" ng-click="startDatePicker($event)" class="tamanho-calendario" alt="Description" />
+                        {{ startDate | date:'dd/MM/yyyy' }}
+                    </div>
+                    
+                    <div id = "right" style = "float:left; width: 25%;">
+                         <img ng-src="img/calendario.png" name="endDate" ng-model="endDate" ng-click="endDatePicker($event)" class="tamanho-calendario" alt="Description" />
+                         {{ endDate | date:'dd/MM/yyyy' }}
+                    </div>
+                </div>                    
+
 				<table class="table table-striped" ng-show="eventos.length > 0">
 					<tr>
 						<th><a class="classOrdem" ng-click="orderBy('date')">Data Original</a></th>
@@ -302,9 +285,10 @@
 						<th>Incorpora Juros?</th>
 						<th>Excluir?</th>
 					</tr>
+                    
 					<!-- O primeiro filtro, filtra tudo dentro de evento. 
                  O segundo filtro, filtra um atributo dentro de um objeto que esta dentro de outro objeto exemplo evento tem um objeto type que tem seus atributos.  -->
-					<tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterioDate.toString() | filter:criterio | filter:{type:{eventType:criterioTipo}} | orderBy:criteryOrder:directionOrder">
+					<tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterio | filter:{type:{eventType:criterioTipo}} | searchDatesBetween:startDate:endDate | orderBy:criteryOrder:directionOrder">
 						<td>{{evento.date | date: 'dd/MM/yyyy'}}</td>
 						<td>{{evento.type.eventType | uppercase}}</td>
 						<td><input type="checkbox" ng-model="evento.isIncorporaJuros" class="checkbox"></input>

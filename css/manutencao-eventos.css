@@ -1,0 +1,73 @@
+.container {
+    margin-top: 50px;
+}
+
+.panel-default {
+    border-color: black;
+}
+
+.panel-default > .panel-heading {
+    background: #009846 none repeat scroll 0 0;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.panel-footer {
+    background: #009846 none repeat scroll 0 0;
+}
+
+.btn-primary {
+    background-color: #004e69;
+    border-color: #004e69;
+    color: #fff;
+}
+
+.btn-block {
+    text-align: center;
+}
+
+.table {
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 3px;
+}
+
+.form-control {
+    margin-bottom: 5px;
+}
+
+.selecionado > td {
+    background: #009846 none repeat scroll 0 0;
+}
+
+.negrito {
+    font-weight: bold;
+}
+/* marca a primeira linha da tabela com a cor desejada*/
+
+.table-striped > tbody > tr:first-child > th {
+    background: #009846 none repeat scroll 0 0;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+}
+
+.classOrdem {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.mdp-calendar-monthyear, .mdp-datepicker-year, .mdp-calendar-week-days, .md-icon-button, .mdp-calendar-days .md-button {
+    font-size: 15px;
+}
+
+.tamanho-calendario{
+    max-width: 30px;
+    margin-top: 10px;
+}

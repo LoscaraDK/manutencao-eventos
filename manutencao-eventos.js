@@ -25,7 +25,12 @@ app.set('port', process.env.PORT || 3000);
 //app.use('/static', express.static(__dirname + '/public'));
 //app.use(express.static('public'));
 app.use('/manutencao-eventos', express.static(__dirname + '/public'));
-app.use('/manutencao-eventos/node_modules', express.static(__dirname + '/node_modules'));
+app.use('/manutencao-eventos/js', express.static(__dirname + '/node_modules'));
+app.use('/manutencao-eventos/js', express.static(__dirname + '/js'));
+app.use('/manutencao-eventos/css', express.static(__dirname + '/node_modules'));
+app.use('/manutencao-eventos/css', express.static(__dirname + '/css'));
+
+
 // log every request to the console
 app.use(morgan('dev'));          
 // parse application/x-www-form-urlencoded                               
@@ -52,12 +57,12 @@ app.all('*', function(req, res, next) {
 // The res object is the response Express sends
 // when it receives a request
 app.get('/manutencao-eventos', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/view/index.html');
   //res.render('index');
 });
 
-app.get('/manutencao-eventos/views/footer.html', function(req, res){
-  res.sendFile(__dirname + '/views/footer.html');
+app.get('/manutencao-eventos/partials/footer.html', function(req, res){
+  res.sendFile(__dirname + '/partials/footer.html');
 });
 
 app.get('/manutencao-eventos/eventos', function(req, res) {

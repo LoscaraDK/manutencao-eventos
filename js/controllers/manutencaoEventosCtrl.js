@@ -1,30 +1,31 @@
-manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $http, $mdpDatePicker, $mdpTimePicker) {
-    //Scopes.store('manutencaoEventosCtrl', $scope);
-
-    //console.log(Scopes.get('MainCtrl').criterioDate); 
-    //$scope.app = 'Manutenção de Eventos'
+manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpDatePicker, $mdpTimePicker,eventosFactoryAPI,tiposDeEventoServiceAPI,serialGenerator) {
+    console.log(serialGenerator.generate());
     $scope.eventos = [];
 
     $scope.tiposDeEventos = [];
 
     var carregarEventos = function () {
-        $http.get("/manutencao-eventos/eventos").success(function (data, status) {
+        eventosFactoryAPI.getEventos().success(function (data, status) {
             $scope.eventos = data;
+        }).error(function(data,status){
+            $scope.message = "Erro: " + data;
         });
     };
 
     var carregarTiposDeEventos = function () {
-        $http.get("/manutencao-eventos/tiposDeEvento").success(function (data, status) {
+        tiposDeEventoServiceAPI.getTiposDeEventos().success(function (data, status) {
             $scope.tiposDeEventos = data;
         });
     };
 
     $scope.addEvent = function (evento) {
         console.log(evento);
-        $http.post("/manutencao-eventos/addEvent", evento).success(function (data) {
+        eventosFactoryAPI.saveEvento(evento).success(function (data,status) {
             delete $scope.evento; //deleta o evento
             $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
             carregarEventos();
+        }).error(function(data,status){
+            $scope.message = "Erro: " + data;
         });
 
         //$scope.eventos.push(evento); //adiciona o objeto no array
@@ -37,9 +38,11 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $http
                 if (!evento.isRemove) return evento;
             });
 
-        $http.post("/manutencao-eventos/removeEvents", $scope.eventos).success(function (data) {
+        eventosFactoryAPI.removeEventos($scope.eventos).success(function (data,status) {
             $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
             carregarEventos();
+        }).error(function(data,status){
+            $scope.message = "Erro: " + data;
         });
     };
 

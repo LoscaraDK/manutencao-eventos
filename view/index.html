@@ -9,7 +9,9 @@
 	<link rel="stylesheet" type="text/css" href="css/mdPickers/dist/mdPickers.min.css">
     <link rel="stylesheet" type="text/css" href="css/manutencao-eventos.css">
 
-	<script src="js/angular/angular.min.js"></script>
+   <!--The problem was that I was developing against the minified/compressed version (assuming it was like other JS libraries). The uncompressed version includes a readable error message.-->
+
+	<script src="js/angular/angular.js"></script>
 	<script src="js/angular-messages/angular-messages.min.js"></script>
 	<script src="js/angular-material/angular-material.min.js"></script>
 	<script src="js/angular-aria/angular-aria.min.js"></script>
@@ -22,7 +24,12 @@
 	<script src="js/app.js"></script>
     <script src="js/controllers/manutencaoEventosCtrl.js"></script>
     <script src="js/filters/manutencaoEventosFilter.js"></script>
-    <script src="js/settings/manutencaoEventosSettings.js"></script>
+    <script src="js/config/manutencaoEventosSettings.js"></script>
+	<script src="js/factory/manutencaoEventosFactory.js"></script>
+	<script src="js/services/manutencaoEventosService.js"></script>
+	<script src="js/value/manutencaoEventosConfigValue.js"></script>
+	<script src="js/constant/manutencaoEventosConfigConstant.js"></script>
+	<script src="js/providers/serialGeneratorProvider.js"></script>
     <!--script src="i18n/angular-locale_pt-br.js"></script-->
 </head>
 

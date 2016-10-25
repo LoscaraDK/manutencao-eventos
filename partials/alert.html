@@ -1,0 +1,27 @@
+<div>
+	<!-- valida se o campo foi preenchido, utiliza required e dirty que mostra a mensagem caso campo seja apagado-->
+	<!-- div ng-show="manutencaoEventosForm.date.$error.required && manutencaoEventosForm.date.$dirty" class="alert alert-danger">Preencha o campo data original</div-->
+	<!-- valida se o campo tem o minimo de caracteres pedido na tag ng-minlength, existe também o campo ng-maxlength para verificar o maximo de caracteres -->
+	<!-- div ng-show="manutencaoEventosForm.date.$error.minlength" class="alert alert-danger">Campo data deve ter o formato dd/mm/yyyy</div -->
+	<!-- valida se regex /^\d{2}\/\d{2}\/\d{4}$/, significado do regex sempre tem // no inicio e fim.
+				^ - começa
+				\d(digitos)
+				{2} quantidade de caracteres, dependendo pode ser um range {2,3} - signica que vai de 2 a 3 digitos.
+				\/ - uma barra.
+				... repito modificando as quantidades.
+				$ - significa que terminou e não pode haver mais nada depois.        
+				-->
+	<!-- div ng-show="manutencaoEventosForm.date.$error.pattern" class="alert alert-danger">Campo data deve ter o formato brasileiro de data dd/mm/yyyy - regex validation</div -->
+
+	<!-- forma de validacao usando ngMessages para agrupar varias mensagens referentes ao mesmo campo, 
+				importar o angular-messages.js e referenciar o modulo angular.module('manutencaoEventos', ['ngMessages']);-->
+
+	<!-- forma de validacao usando $invalid e $valid.>
+<div ng-show="manutencaoEventosForm.isIncorporaJuros.$invalid && manutencaoEventosForm.isIncorporaJuros.$dirty" class="alert alert-danger">Preencha o campo indicando se incorpora juros</div-->
+
+	<div ng-messages="manutencaoEventosForm.type.$error" ng-show="manutencaoEventosForm.type.$dirty" ng-class="{'alert alert-danger':manutencaoEventosForm.type.$invalid}"
+		role="alert">
+		<div ng-message="required">Selecione o Tipo de Evento</div>
+	</div>
+	<div ng-show="manutencaoEventosForm.date.$error.required && manutencaoEventosForm.date.$dirty" class="alert alert-danger">Campo data deve ter o formato dd/mm/yyyy</div>
+</div>

@@ -5,7 +5,7 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
     $scope.tiposDeEventos = [];
 
     var carregarEventos = function () {
-        eventosFactoryAPI.getEventos().success(function (data, status) {
+        eventosFactoryAPI.getEventos().success(function (data) {
             $scope.eventos = data;
         }).error(function(data,status){
             $scope.message = "Erro: " + data;
@@ -13,14 +13,17 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
     };
 
     var carregarTiposDeEventos = function () {
-        tiposDeEventoServiceAPI.getTiposDeEventos().success(function (data, status) {
+        tiposDeEventoServiceAPI.getTiposDeEventos().success(function (data) {
             $scope.tiposDeEventos = data;
+        }).error(function(data,status){
+            $scope.message = "Erro: " + data;
+            console.log("Erro: " + data);
         });
     };
 
     $scope.addEvent = function (evento) {
         console.log(evento);
-        eventosFactoryAPI.saveEvento(evento).success(function (data,status) {
+        eventosFactoryAPI.saveEvento(evento).success(function (data) {
             delete $scope.evento; //deleta o evento
             $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
             carregarEventos();
@@ -38,7 +41,7 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
                 if (!evento.isRemove) return evento;
             });
 
-        eventosFactoryAPI.removeEventos($scope.eventos).success(function (data,status) {
+        eventosFactoryAPI.removeEventos($scope.eventos).success(function (data) {
             $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
             carregarEventos();
         }).error(function(data,status){

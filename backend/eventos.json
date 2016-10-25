@@ -21,7 +21,9 @@
       "eventType": "Pagamento de Amortização",
       "id": 3,
       "isFinal": "NÃO"
-    }
+    },
+    "isIncorporaJuros": false,
+    "isRemove": false
   },
   {
     "date": "2016-10-24T02:00:00.000Z",
@@ -32,15 +34,6 @@
     }
   },
   {
-    "date": "2016-10-21T02:00:00.000Z",
-    "type": {
-      "eventType": "Pagamento de Amortização",
-      "id": 3,
-      "isFinal": "NÃO"
-    },
-    "isIncorporaJuros": true
-  },
-  {
     "date": "2016-10-31T02:00:00.000Z",
     "type": {
       "eventType": "Vencimento (Resgate)",
@@ -48,5 +41,22 @@
       "isFinal": "SIM"
     },
     "isIncorporaJuros": true
+  },
+  {
+    "type": {
+      "eventType": "Pagamento de Amortização",
+      "id": 3,
+      "isFinal": "NÃO"
+    },
+    "date": "2016-10-25T02:00:00.000Z"
+  },
+  {
+    "type": {
+      "eventType": "Pagamento de Amortização",
+      "id": 3,
+      "isFinal": "NÃO"
+    },
+    "date": "2016-10-26T02:00:00.000Z",
+    "isIncorporaJuros": false
   }
 ]

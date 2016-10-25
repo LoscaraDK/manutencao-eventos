@@ -65,6 +65,10 @@ app.get('/manutencao-eventos/partials/footer.html', function(req, res){
   res.sendFile(__dirname + '/partials/footer.html');
 });
 
+app.get('/manutencao-eventos/partials/alert.html', function(req, res){
+  res.sendFile(__dirname + '/partials/alert.html');
+});
+
 app.get('/manutencao-eventos/eventos', function(req, res) {
   res.sendFile(__dirname + '/backend/eventos.json');
   

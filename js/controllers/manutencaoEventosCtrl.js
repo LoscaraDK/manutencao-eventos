@@ -1,8 +1,10 @@
 manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpDatePicker, $mdpTimePicker,eventosFactoryAPI,tiposDeEventoServiceAPI,serialGenerator) {
     console.log(serialGenerator.generate());
+    
     $scope.eventos = [];
-
     $scope.tiposDeEventos = [];
+    $scope.fromDate = null;
+    $scope.toDate = null;
 
     var carregarEventos = function () {
         eventosFactoryAPI.getEventos().success(function (data) {
@@ -59,38 +61,6 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
         $scope.criteryOrder = campo;
         $scope.directionOrder = !$scope.directionOrder;
     };
-
-    $scope.startDate = null;
-    $scope.endDate = null;
-
-    $scope.startDatePicker = function (ev) {
-        $mdpDatePicker($scope.startDate, {
-            targetEvent: ev
-        }).then(function (selectedDate) {
-            $scope.startDate = selectedDate;
-        });;
-    };
-
-    $scope.endDatePicker = function (ev) {
-        $mdpDatePicker($scope.endDate, {
-            targetEvent: ev
-        }).then(function (selectedDate) {
-            $scope.endDate = selectedDate;
-        });;
-    };
-
-    // $scope.filterDate = function(date) {
-    // return moment(date).date() % 2 == 0;
-    //};
-
-    // $scope.showTimePicker = function(ev) {
-    //    $mdpTimePicker($scope.currentTime, {
-    //    targetEvent: ev
-    // }).then(function(selectedDate) {
-    //     $scope.currentTime = selectedDate;
-    // });;
-    //} ; 
-
 
     carregarEventos();
     carregarTiposDeEventos();

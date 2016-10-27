@@ -9,8 +9,6 @@
 	<link rel="stylesheet" type="text/css" href="css/mdPickers/dist/mdPickers.min.css">
 	<link rel="stylesheet" type="text/css" href="css/manutencao-eventos.css">
 
-	
-
 	<!--The problem was that I was developing against the minified/compressed version (assuming it was like other JS libraries). The uncompressed version includes a readable error message.-->
 
 	<script src="js/angular/angular.js"></script>
@@ -32,9 +30,8 @@
 	<script src="js/value/manutencaoEventosConfigValue.js"></script>
 	<script src="js/constant/manutencaoEventosConfigConstant.js"></script>
 	<script src="js/providers/serialGeneratorProvider.js"></script>
-	<script src="js/directives/uiAlertDirective.js"></script>
+	
 	<!--script src="i18n/angular-locale_pt-br.js"></script-->
-
 </head>
 
 <body ng-controller="manutencaoEventosCtrl">
@@ -45,7 +42,10 @@
 			<div class="panel-body">
 				<!--h4 ng-bind="app"></h4-->
 
-				<ui-alert></ui-alert>
+				<div ng-messages="manutencaoEventosForm.type.$error" ng-show="manutencaoEventosForm.type.$dirty" ng-class="{'alert alert-danger':manutencaoEventosForm.type.$invalid}"
+					role="alert">
+					<div ng-message="required">Selecione o Tipo de Evento</div>
+				</div>
 
 				<div class="busca">
 				<input type="text" class="form-control" name="criterio" ng-model="criterio" placeholder="Busca por qualquer coluna?"/>
@@ -92,10 +92,9 @@
 							<td>
 								<!--input class="form-control" type="text" ng-model="evento.date" name="date" ng-required="true" ng-minlength="10" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/"/-->
 								<!--md-datepicker ng-model="evento.date" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker-->
-								<mdp-date-picker mdp-open-on-click required name="date" mdp-placeholder="(dd/mm/yyyy)" mdp-format="DD/MM/YYYY"
-									ng-model="evento.date">
+								<mdp-date-picker mdp-open-on-click required name="date" mdp-placeholder="(dd/mm/yyyy)" mdp-format="DD/MM/YYYY"	ng-model="evento.date">
 								<div ng-messages="manutencaoEventosForm.date.$error" >
-									<div ng-message="required" >* Campo obrigatório</div>
+									<div ng-message="required">* Campo obrigatório</div>
 								</div>
 								</mdp-date-picker>
 							</td>

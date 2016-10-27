@@ -10,7 +10,7 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
         eventosFactoryAPI.getEventos().success(function (data) {
             $scope.eventos = data;
         }).error(function(data,status){
-            $scope.message = "Erro: " + data;
+            $scope.error = "Não foi possivel carregar os eventos - Erro: " + data;
         });
     };
 
@@ -18,19 +18,17 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
         tiposDeEventoServiceAPI.getTiposDeEventos().success(function (data) {
             $scope.tiposDeEventos = data;
         }).error(function(data,status){
-            $scope.message = "Erro: " + data;
-            console.log("Erro: " + data);
+            $scope.error = "Não foi possivel carregar os tipos de eventos - Erro: " + data;
         });
     };
 
     $scope.addEvent = function (evento) {
-        console.log(evento);
         eventosFactoryAPI.saveEvento(evento).success(function (data) {
             delete $scope.evento; //deleta o evento
             $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
             carregarEventos();
         }).error(function(data,status){
-            $scope.message = "Erro: " + data;
+            $scope.error = "Não foi possivel salvar o evento  - Erro: " + data;
         });
 
         //$scope.eventos.push(evento); //adiciona o objeto no array
@@ -47,7 +45,7 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
             $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
             carregarEventos();
         }).error(function(data,status){
-            $scope.message = "Erro: " + data;
+             $scope.error = "Não foi possivel remover os eventos  - Erro: " + data;
         });
     };
 

@@ -1,0 +1,341 @@
+<html ng-app="prototipo">
+
+    <head>
+
+         <meta charset="UTF-8">
+
+         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+
+         <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>      
+
+         <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.1/angular-material.js"></script>
+
+         <script src="http://localhost:3000/manutencao-eventos/js/moment/moment.js"></script>
+
+         <script src="http://localhost:3000/manutencao-eventos/js/moment/locale/pt-br.js"></script>
+
+         <script src="https://cdn.rawgit.com/alenaksu/mdPickers/0.7.5/dist/mdPickers.min.js"></script>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+ 
+
+        
+
+ 
+
+         <script>
+
+             var app =angular.module("prototipo",['ngMaterial', 'ngMessages', 'material.svgAssetsCache','ngAria','mdPickers','ngAnimate']);
+
+             app.controller("prototipoCtrl",function($scope,$mdpDatePicker){
+
+                    $scope.myDate = new Date();
+
+                    $scope.fromDate = new Date();
+
+                    $scope.toDate = new Date();
+
+                   
+
+                    $scope.currentDate = new Date();
+
+                    $scope.showDatePicker = function(ev) {
+
+                            $mdpDatePicker($scope.currentDate, {
+
+                            targetEvent: ev
+
+                        }).then(function(selectedDate) {
+
+                            $scope.currentDate = selectedDate;
+
+                       });;
+
+                    };
+
+ 
+
+                    $scope.aniversarios = [
+
+                        {"name":"daniel","date":"2016-10-25"},
+
+                        {"name":"maria","date":"2016-10-24"},
+
+                        {"name":"josé","date":"2016-10-23"},
+
+                        {"name":"joão","date":"2016-10-22"}
+
+                    ];
+
+             });
+
+             app.config(function($mdDateLocaleProvider){
+
+                moment.updateLocale("pt-br",null);
+
+               
+
+               // $mdDateLocaleProvider.months = moment.months();
+
+               // $mdDateLocaleProvider.shortMonths = moment.monthsShort();
+
+               // $mdDateLocaleProvider.days = moment.weekdays();
+
+               // $mdDateLocaleProvider.shortDays = moment.weekdaysShort();
+
+ 
+
+                //$mdDateLocaleProvider.formatDate = function (date) {
+
+                //    return moment(date).format('DD/MM/YYYY');
+
+                //};
+
+             });
+
+            
+
+            app.filter("searchDatesBetween", function ($filter) {
+
+                return function (items, from, to) {
+
+                    var result = [];
+
+ 
+
+                    if (!from || !to) {
+
+                        return items;
+
+                    }
+
+ 
+
+                    var df = moment(moment(from).format('YYYY-MM-DD'));
+
+                    var dt = moment(moment(to).format('YYYY-MM-DD'));
+
+                    for (var i = 0; i < items.length; i++) {
+
+                        var dtSemFt = moment(items[i].date).format('YYYY-MM-DD');
+
+                        var tf = moment(dtSemFt);
+
+                       // console.log('FROM FT > ' + moment(from).format('YYYY-MM-DDTHH:mm:ss.SSSZ'));
+
+                       // console.log('TO FT > '+ moment(to).format('YYYY-MM-DDTHH:mm:ss.SSSZ'));
+
+                       // console.log('FROM FT2 > ' + moment(from).format('YYYY-MM-DDT00:00:00.000Z'));
+
+                       // console.log('TO FT2 > '+ moment(to).format('YYYY-MM-DDT00:00:00.000Z'));
+
+                      //  console.log('FROM > ' + df);
+
+                       // console.log('TO > '+ dt);
+
+                       // console.log('TF > ' + tf);
+
+                       // console.log('dtSemFtTF > ' + dtSemFt);
+
+                        var isBefore = moment(tf).isSameOrBefore(dt,'day');
+
+                        var isAfter = moment(tf).isSameOrAfter(df, 'day');
+
+                       // console.log('isSameOrBefore: ' + isBefore + ' e isAfter: ' + isAfter);
+
+                        //if (tf >= df && tf <= dt) {
+
+                        if (isBefore && isAfter) {
+
+                            result.push(items[i]);
+
+                        }
+
+                    }
+
+                    return result;
+
+                };
+
+            });
+
+            app.directive('uiDateMask', function ($filter) {
+    return {
+        //propriedade require - Estabelece um vinculo com outra diretiva interagindo
+        //por meio do controller, que é um dos parâmetros da funçAo
+        //link
+        require: "ngModel",
+        //propriedade link - executada depois do template ter sido compilado,
+        //podemos usar para interagir com a DOM,
+        //tratando eventos ou mesmo para definir o comportamento
+        //associado com a logica da diretiva.
+        //scope - escopo do controlador
+        //angular.element - permite fazer uma série de operaçoes com jqLite
+        //attrs - nos permite acessar atributos do elemento ex: id,name,value etc
+        //ctrl - nos permite acessar o controller defido na propriedade require.
+        link: function (scope,element,attrs,ctrl) {
+            var _formatDate = function (date) {
+                date = date.replace(/[^0-9]+/g,"");
+                if(date.length > 2){
+                    date = date.substring(0,2) + "/" + date.substring(2);
+                }
+                if(date.length > 5){
+                    date = date.substring(0,5) + "/" + date.substring(5,9);
+                }
+                return date;
+            };
+
+            element.bind("keyup",function(){
+                console.log(ctrl.$viewValue);
+                ctrl.$setViewValue(_formatDate(ctrl.$viewValue));
+                ctrl.$modelValue = _formatDate(ctrl.$viewValue);
+                ctrl.$$rawModelValue = _formatDate(ctrl.$viewValue);
+                console.log(ctrl.$viewValue);
+                console.log(ctrl);
+                console.log(ctrl.$render());
+                console.log(element.html());
+                //ctrl.find("input").$render();
+
+                ctrl.$render();
+            });
+
+            ctrl.$parsers.push(function (value) {
+				if (value.length === 10) {
+					var dateArray = _formatDate(value).split("/");
+					return new Date(dateArray[2], dateArray[1]-1, dateArray[0]).getTime();
+				}
+			});
+
+			ctrl.$formatters.push(function (value) {
+				return $filter("dateFormat")(_formatDate(value), "dd/MM/yyyy");
+			});
+        }
+    };
+});
+
+         </script>
+
+         <link rel="stylesheet" type="text/css" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.1/angular-material.css">
+
+         <link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.1/docs.css">
+
+         <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/alenaksu/mdPickers/0.7.4/dist/mdPickers.min.css">
+
+         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,700">
+
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        
+
+         <style>
+
+             body {
+
+            font-family: 'Roboto', sans-serif;
+
+            }
+
+ 
+
+            #content { height: 100%; }
+
+ 
+
+            #content > md-content {
+
+            background-color: #eee;
+
+            }
+
+         </style>
+
+    </head>
+
+    <body ng-controller="prototipoCtrl">
+
+        <form name="prototipoForm">
+
+        <div flex-gt-xs="">
+
+            <h4>Standard date-picker</h4>
+
+            <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+
+        </div>
+
+        {{fromDate}}
+
+        {{$event}}
+
+        <div>
+
+              <h4 class="md-subhead">Using $mdpDatePicker service</h4>
+
+              <md-button class="md-raised md-warn" ng-click="showDatePicker($event)" aria-label="show picker">show picker</md-button>
+
+              <p>
+
+                {{ currentDate | date:'dd/MM/yyyy' }}
+
+              </p>
+
+            </div>
+
+            <div>
+
+              <h4 class="md-subhead">Custom format + error messages</h4>
+
+              <mdp-date-picker mdp-open-on-click required name="dateFormat" mdp-placeholder="My date(dd/mm/yyyy)" mdp-format="DD/MM/YYYY" ng-model="fromDate"></mdp-date-picker>
+
+                <div ng-messages="prototipoForm.dateFormat.$error">
+
+                  <div ng-message="required">This is required</div>
+
+              </div>
+
+              <mdp-date-picker mdp-open-on-click required name="dateFormat" mdp-placeholder="My date(dd/mm/yyyy)" mdp-format="DD/MM/YYYY" ng-model="toDate" ui-date-mask></mdp-date-picker>
+
+                <div ng-messages="prototipoForm.dateFormat.$error">
+
+                  <div ng-message="required">This is required</div>
+
+              </div>
+
+              </div>  
+
+ <input type="text" ng-model="date" ui-date-mask> </input>
+
+              <table class="table table-striped">
+
+                  <tr>
+
+                      <td>Nome</td>
+
+                      <td>Data</td>
+
+                  </tr>
+
+                  <tr ng-repeat="aniversario in aniversarios | searchDatesBetween:fromDate:toDate">
+
+                      <td>{{aniversario.name}}</td>
+
+                      <td>{{aniversario.date}}</td>
+
+                  </tr>
+
+              </table> 
+
+</form>
+
+    </body>
+
+</html>

@@ -5,7 +5,7 @@ manutencaoEventosApp.provider("serialGenerator",function (configLength) {
 	var _length = configLength.defaultLength;
 	
 	this.getLength = function () {
-		return _length
+		return _length;
 	};
 
 	this.setLength = function (length) {

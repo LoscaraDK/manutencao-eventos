@@ -5,7 +5,8 @@
   "description": "Prototipo para função para manutenção de eventos usando angular",
   "main": "manutencao-eventos.js",
   "scripts": {
-    "test": "echo \"Error: no test especified\" && exit 1"
+    "test": "echo \"Error: no test especified\" && exit 1",
+    "postinstall": "typings install"
   },
   "dependencies": {
     "angular": "^1.5.8",
@@ -15,6 +16,7 @@
     "angular-material": "^1.1.1",
     "angular-messages": "^1.5.8",
     "angular-route": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "consolidate": "^0.14.1",
@@ -27,5 +29,19 @@
     "moment": "^2.15.1",
     "morgan": "^1.7.0",
     "multer": "^1.2.0"
+  },
+  "devDependencies": {
+    "event-stream": "^3.3.4",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-cleancss": "^0.2.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-jshint": "^2.0.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.4",
+    "run-sequence": "^1.2.2",
+    "typings": "^1.5.0"
   }
 }

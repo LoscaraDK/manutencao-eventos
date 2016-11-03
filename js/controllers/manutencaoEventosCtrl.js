@@ -54,7 +54,7 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
         return eventos.some(function (evento) {
             return evento.isRemove;
         });
-    }
+    };
     $scope.orderBy = function (campo) {
         $scope.criteryOrder = campo;
         $scope.directionOrder = !$scope.directionOrder;

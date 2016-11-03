@@ -1,3 +1,5 @@
 node_modules
 public/img/image001.png
 public/img/unnamed.png
+typings
+dist

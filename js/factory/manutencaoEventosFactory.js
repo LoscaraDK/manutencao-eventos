@@ -28,5 +28,5 @@ manutencaoEventosApp.factory("eventosFactoryAPI",function ($http,config) {
         getEventos: _getEventos,
         saveEvento: _saveEvento,
         removeEventos: _removeEventos
-    }
+    };
 });

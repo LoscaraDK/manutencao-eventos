@@ -1,0 +1,6 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+// "terminal.integrated.shell.windows": "C:\\Desenvolvimento\\cmder\\cmder.exe"
+"terminal.integrated.shell.windows": "C:/Desenvolvimento/cmder/Cmder.exe",
+"typescript.tsdk": "./node_modules/typescript/lib"
+}

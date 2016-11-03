@@ -1,0 +1,24 @@
+{
+  "globalDependencies": {
+    "angular": "registry:dt/angular#1.5.0+20161016133926",
+    "angular-animate": "registry:dt/angular-animate#1.5.0+20160709061515",
+    "angular-material": "registry:dt/angular-material#1.1.0-rc5.0+20161019085523",
+    "angular-route": "registry:dt/angular-route#1.3.0+20160317120654",
+    "body-parser": "registry:dt/body-parser#0.0.0+20160619023215",
+    "bootstrap": "registry:dt/bootstrap#3.3.5+20160619023404",
+    "consolidate": "registry:dt/consolidate#0.0.0+20160811111312",
+    "cookie-parser": "registry:dt/cookie-parser#1.3.4+20160316155526",
+    "event-stream": "registry:dt/event-stream#0.0.0+20160216030252",
+    "express": "registry:dt/express#4.0.0+20160708185218",
+    "gulp": "registry:dt/gulp#3.8.0+20160907112908",
+    "gulp-concat": "registry:dt/gulp-concat#0.0.0+20160316155526",
+    "gulp-htmlmin": "registry:dt/gulp-htmlmin#1.3.0+20160316155526",
+    "gulp-rename": "registry:dt/gulp-rename#0.0.0+20160817204333",
+    "jquery": "registry:dt/jquery#1.10.0+20160929162922",
+    "method-override": "registry:dt/method-override#0.0.0+20160925094606",
+    "moment": "registry:dt/moment#2.11.1+20161010105546",
+    "morgan": "registry:dt/morgan#1.7.0+20160524142355",
+    "multer": "registry:dt/multer#0.0.0+20160829120954",
+    "run-sequence": "registry:dt/run-sequence#0.0.0+20160316155526"
+  }
+}

@@ -28,7 +28,7 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
             $scope.manutencaoEventosForm.$setPristine(); //reseta as mensagens de erro
             carregarEventos();
         }).error(function(data,status){
-            $scope.error = "Não foi possivel salvar o evento  - Erro: " + data;
+            $scope.error = "Não foi possivel salvar o evento  -> Erro: " + data;
         });
 
         //$scope.eventos.push(evento); //adiciona o objeto no array

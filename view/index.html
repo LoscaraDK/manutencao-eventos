@@ -12,6 +12,7 @@
 	<!--The problem was that I was developing against the minified/compressed version (assuming it was like other JS libraries). The uncompressed version includes a readable error message.-->
 
 	<script src="js/angular/angular.js"></script>
+	<script src="js/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="js/angular-messages/angular-messages.min.js"></script>
 	<script src="js/angular-material/angular-material.min.js"></script>
 	<script src="js/angular-aria/angular-aria.min.js"></script>
@@ -25,6 +26,7 @@
 	<script src="js/controllers/manutencaoEventosCtrl.js"></script>
 	<script src="js/filters/dateFilter.js"></script>
 	<script src="js/config/manutencaoEventosSettings.js"></script>
+	<script src="js/config/routerConfig.js"></script>
 	<script src="js/factory/manutencaoEventosFactory.js"></script>
 	<script src="js/services/manutencaoEventosService.js"></script>
 	<script src="js/value/manutencaoEventosConfigValue.js"></script>
@@ -34,98 +36,15 @@
 	<!--script src="i18n/angular-locale_pt-br.js"></script-->
 </head>
 
-<body ng-controller="manutencaoEventosCtrl">
-	<form name="manutencaoEventosForm">
-	<div class="container">
+<body>
+<div class="container">
 		<div class="panel panel-default">
 			<div class="panel-heading">Manutenção de Eventos</div>
-			<div class="panel-body">
-				<!--h4 ng-bind="app"></h4-->
-
-				<div ng-messages="manutencaoEventosForm.type.$error" ng-show="manutencaoEventosForm.type.$dirty" ng-class="{'alert alert-danger':manutencaoEventosForm.type.$invalid}"
-					role="alert">
-					<div ng-message="required">Selecione o Tipo de Evento</div>
-				</div>
-
-				<div class="busca">
-				<input type="text" class="form-control" name="criterio" ng-model="criterio" placeholder="Busca por qualquer coluna?"/>
-				</div>
-
-				<!--div ng-controller="MainCtrl as ctrl"-->
-				<div id="container" style="width:100%">
-					<div id="left" style="float:left; width: 15%;">
-						<mdp-date-picker mdp-open-on-click required name="dateFormat" mdp-placeholder="Data inicial?" mdp-format="DD/MM/YYYY"
-							ng-model="fromDate"></mdp-date-picker>
-					</div>
-					<div id="right" style="float:left; width: 15%">
-						<mdp-date-picker mdp-open-on-click required name="dateFormat" mdp-placeholder="Data final?" mdp-format="DD/MM/YYYY"
-							ng-model="toDate"></mdp-date-picker>
-					</div>
-					<div id="right" style="float:left; width: 39%; text-align: center;position: relative;vertical-align: middle;padding-top: 15px;padding-left:34px;">
-						<input type="text" class="form-control" name="criterioTipo" ng-model="criterioTipo" placeholder="Busca somente por tipo de evento?"/>
-					</div>
-					<div id="right" style="float:right; width: 21%; text-align: center">
-					</div>
-				</div>
-				
-					<table class="table table-striped" ng-show="eventos.length > 0">
-						<tr>
-							<th><a class="classOrdem" ng-click="orderBy('date')">Data Original</a></th>
-							<th><a class="classOrdem" ng-click="orderBy('type.eventType')"> Tipo Evento</a></th>
-							<th>Incorpora Juros?</th>
-							<th>Excluir?</th>
-						</tr>
-
-						<!-- O primeiro filtro, filtra tudo dentro de evento. 
-						O segundo filtro, filtra um atributo dentro de um objeto que esta dentro de outro objeto exemplo evento tem um objeto type que tem seus atributos.  -->
-						<tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterio | filter:{type:{eventType:criterioTipo}} | searchDatesBetween:fromDate:toDate | orderBy:criteryOrder:directionOrder">
-							<td>{{evento.date | date: 'dd/MM/yyyy'}}</td>
-							<td>{{evento.type.eventType | uppercase}}</td>
-							<td><input type="checkbox" ng-model="evento.isIncorporaJuros" class="checkbox"></input>
-							</td>
-							<td><input type="checkbox" ng-model="evento.isRemove" class="checkbox"></input>
-							</td>
-						</tr>
-
-
-						<tr class="active">
-							<td>
-								<!--input class="form-control" type="text" ng-model="evento.date" name="date" ng-required="true" ng-minlength="10" ng-pattern="/^\d{2}\/\d{2}\/\d{4}$/"/-->
-								<!--md-datepicker ng-model="evento.date" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker-->
-								<mdp-date-picker mdp-open-on-click required name="date" mdp-placeholder="(dd/mm/yyyy)" mdp-format="DD/MM/YYYY"	ng-model="evento.date">
-								<div ng-messages="manutencaoEventosForm.date.$error" >
-									<div ng-message="required">* Campo obrigatório</div>
-								</div>
-								</mdp-date-picker>
-							</td>
-							<td>
-								<!--select class="form-control" ng-model="evento.type" ng-options="tipoDeEvento.eventType group by tipoDeEvento.isFinal for tipoDeEvento in tiposDeEventos" >
-<option value="">--- Selecione um evento ---</option>
-</select-->						<div class="seleciona-evento">
-								<select class="form-control" ng-model="evento.type" name="type" ng-options="tipoDeEvento.eventType for tipoDeEvento in tiposDeEventos | orderBy:'eventType'"
-									ng-required="true">
-										<option value="">--- Selecione um evento ---</option>
-								</select>
-								</div>
-							</td>
-							
-							<td>
-								<div class="seleciona-evento">
-									<input class="checkbox" type="checkbox" ng-model="evento.isIncorporaJuros" name="isIncorporaJuros" />
-								</div>
-							</td>
-							<td></td>
-						</tr>
-					</table>
-				</form>
-				<div class="panel-footer btn-block">
-					<button class="btn btn-primary" ng-click="addEvent(evento)" ng-disabled="!evento.date || !evento.type">Adicionar Evento</button>
-					<button class="btn btn-danger" ng-click="removeEvents(eventos)" ng-show="isSelectedEvent(eventos)">Apagar Eventos</button>
+				<div class="panel-body">	
+					<div ui-view></div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div ng-include="'partials/footer.html'">
 		<!--
 filtros: 
 number ex:(100 | number, 100 | number:2 -> casas decimais), 
@@ -133,7 +52,7 @@ currency -> é possivel baixar o angular-locale e depois importar o script.
 limitTo:3 - limita o numero de caracteres em uma string
 
 -->
-	</div>
+<div ng-include="'partials/footer.html'"></div>
 </body>
 
 </html>

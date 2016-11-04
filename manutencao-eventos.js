@@ -29,6 +29,7 @@ app.use('/manutencao-eventos/js', express.static(__dirname + '/node_modules'));
 app.use('/manutencao-eventos/js', express.static(__dirname + '/js'));
 app.use('/manutencao-eventos/css', express.static(__dirname + '/node_modules'));
 app.use('/manutencao-eventos/css', express.static(__dirname + '/css'));
+app.use('/manutencao-eventos/partials', express.static(__dirname + '/partials'));
 
 
 // log every request to the console
@@ -59,17 +60,6 @@ app.all('*', function(req, res, next) {
 app.get('/manutencao-eventos', function(req, res){
   res.sendFile(__dirname + '/view/index.html');
   //res.render('index');
-});
-
-app.get('/manutencao-eventos/partials/footer.html', function(req, res){
-  res.sendFile(__dirname + '/partials/footer.html');
-});
-
-app.get('/manutencao-eventos/partials/alert.html', function(req, res){
-  res.sendFile(__dirname + '/partials/alert.html');
-});
-app.get('/manutencao-eventos/partials/alert-estudo.html', function(req, res){
-  res.sendFile(__dirname + '/partials/alert-estudo.html');
 });
 
 app.get('/manutencao-eventos/eventos', function(req, res) {

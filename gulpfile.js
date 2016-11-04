@@ -8,6 +8,12 @@ var htmlmin = require('gulp-htmlmin');
 var cleancss = require('gulp-cleancss');
 var runSequence = require("run-sequence");
 var rename = require("gulp-rename");
+var nodemon = require('gulp-nodemon');
+var spawn   = require('child_process');
+var bunyan   = require('bunyan');
+var bs = require('browser-sync');
+
+
 
 gulp.task("clean",function(){
     return gulp.src("dist/")
@@ -48,6 +54,67 @@ gulp.task("copy",function(){
     return gulp.src("view/prototipo.html")
             .pipe(rename("prototype.html"))
             .pipe(gulp.dest("dist/"));
+});
+
+gulp.task('run',['browser-sync'],function(cb) {
+    var called = false; 
+    var stream = nodemon({
+        script: 'manutencao-eventos.js',
+        ext:    'js html css',
+        ignore: [
+            'node_modules/',
+            'gulpfile.js'
+        ],
+        watch:    ['js/','lib/','view/','css/','partials/'],
+        stdout:   true,
+        readable: true
+    });
+    stream.on('readable', function() {
+ 
+        // free memory 
+        bunyan && bunyan.kill();
+ 
+        bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
+            '--output', 'short',
+            '--color'
+        ]);
+ 
+        bunyan.stdout.pipe(process.stdout);
+        bunyan.stderr.pipe(process.stderr);
+ 
+        this.stdout.pipe(bunyan.stdin);
+        this.stderr.pipe(bunyan.stdin);
+    });
+   
+    stream.on('start', function () {
+        if (!called) {
+            called = true;
+            cb();
+        }
+    })
+    .on('restart',['default'], function () {
+            console.log('restarted!!!');
+            var reload = bs.reload;
+            setTimeout(function () {
+                reload({ stream: false });
+            }, 1000);
+      })
+      .on('crash', function() {
+        console.error('Application has crashed!\n');
+         stream.emit('restart', 10); // restart the server in 10 seconds 
+      });
+
+      return stream;
+});
+
+gulp.task('browser-sync',function() {
+    return bs({
+        proxy: 'http://localhost:3000/manutencao-eventos',
+        port: 3000,
+        browser: ["firefox"],
+        notify: true
+        
+    });
 });
 
 gulp.task("default",function(){

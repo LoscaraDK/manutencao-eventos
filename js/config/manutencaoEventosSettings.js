@@ -2,7 +2,7 @@
 manutencaoEventosApp.config(function ($mdDateLocaleProvider,serialGeneratorProvider) {
     serialGeneratorProvider.setLength(50);
     console.log(serialGeneratorProvider.getLength());
-    
+    console.log('testando o restart!!!!');
 
     moment.updateLocale('pt-br', null);
 

@@ -2,4 +2,5 @@ var manutencaoEventosApp = angular.module('manutencaoEventos', ["ngMaterial",
                                                                 "ngAnimate",
                                                                 "ngAria",
                                                                 "ngMessages",
-                                                                "mdPickers"]);
+                                                                "mdPickers",
+                                                                'ui.router']);

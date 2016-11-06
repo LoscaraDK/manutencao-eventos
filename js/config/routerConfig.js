@@ -1,6 +1,4 @@
 manutencaoEventosApp.config(function ($stateProvider,$urlRouterProvider) {
-    console.log('roteamento iniciadoaaaa');
-    
     $urlRouterProvider.otherwise('/filter');
     $stateProvider
 
@@ -8,14 +6,28 @@ manutencaoEventosApp.config(function ($stateProvider,$urlRouterProvider) {
         url: '/filter',
         templateUrl: 'partials/manutencao-eventos-filter.html',
         controller: 'manutencaoEventosCtrl'
-    }).state('list', {
+    })
+    
+    .state('list', {
         url: '/list',
         templateUrl: 'partials/manutencao-eventos-list.html',
         controller: 'manutencaoEventosCtrl',
         resolve: {
-            log: function(){
-                console.log('entrou aqui');
+            log: function($stateParams){
+                console.log($stateParams);
             }
+        },
+        params: {
+            nomeAgPagamento:null,
+            codAgPagamento:null,
+            nomeRegistrador:null,
+            codRegistrador:null,
+            sitIF:null,
+            codIF:null,
+            sitEvento:null,
+            fromDate:null,
+            toDate:null,
+            squash: true
         }
     });
 });

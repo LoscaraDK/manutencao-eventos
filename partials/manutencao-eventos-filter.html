@@ -1,1 +1,44 @@
-<div><a ui-sref="list">filtro</a></div>
+<form name="manutencaoFilterForm">
+<div class="container container-filter">
+<div class="panel panel-default">
+    <div class="panel-heading">Manutenção de Eventos</div>
+    <div class="panel-body">
+            <div>
+                <input class="form-control" type="text" ng-model="nomeAgPagamento" id="nomeAgPagamento" placeholder="Digite o nome do Agente de Pagamento?"></input>
+                <input class="form-control" type="text" ng-model="codAgPagamento" id="codAgPagamento" placeholder="Digite a conta do Agente de Pagamento?"></input>
+                <input class="form-control" type="text" ng-model="nomeRegistrador" id="nomeRegistrador" placeholder="Digite o nome do Registrador?"></input>
+                <input class="form-control" type="text" ng-model="codRegistrador" id="codRegistrador" placeholder="Digite a conta do Registrador?"></input>
+                <select class="form-control" ng-model="tipoIF" id="tipoIF">
+                    <option value="">--- Selecione um tipo de if ---</option>
+                </select>
+                <select class="form-control" ng-model="sitIF" id="sitIF">
+                    <option value="">--- Selecione um tipo de situação ---</option>
+                </select>
+                <input class="form-control" type="text" ng-model="codIF" id="codIF" placeholder="Digite o Código do Instrumento Financeiro?"></input>
+                <select class="form-control" ng-model="tpEvento" id="tpEvento">
+                    <option value="">--- Escolha o Tipo de Evento ---</option>
+                </select>
+                <select class="form-control" ng-model="sitEvento" id="sitEvento">
+                    <option value="">--- Escolha a situação do evento ---</option>
+                </select>
+
+                <div id="container" style="width:100%;margin-top: 20px;">
+					<div id="left" style="float:left; width: 40%;">
+						<mdp-date-picker mdp-open-on-click required name="fromDate" mdp-placeholder="Data inicial?" mdp-format="DD/MM/YYYY" ng-model="fromDate"></mdp-date-picker>
+					</div>
+					<div id="right" style="float:left; width: 40%">
+						<mdp-date-picker mdp-open-on-click required name="toDate" mdp-placeholder="Data final?" mdp-format="DD/MM/YYYY" ng-model="toDate"></mdp-date-picker>
+					</div>
+					<div id="right" style="float:right; width: 20%; text-align: center">
+					</div>
+				</div>     
+            </div>
+    </div>
+        <div class="panel-footer btn-block">
+            <button class="btn btn-primary" ng-click="goTo('list',{nomeAgPagamento,codAgPagamento,nomeRegistrador,codRegistrador,sitIF,codIF,sitEvento,fromDate,toDate})" >Buscar</button>
+            <button class="btn btn-primary" ng-click="limpar()" >Limpar Filtros</button>				    
+        </div>   
+</div>
+</div>
+</div>
+</form>

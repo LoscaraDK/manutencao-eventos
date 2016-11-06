@@ -1,11 +1,8 @@
-manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpDatePicker, $mdpTimePicker,eventosFactoryAPI,tiposDeEventoServiceAPI,serialGenerator) {
-    console.log(serialGenerator.generate());
-    
+manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpDatePicker, $mdpTimePicker,eventosFactoryAPI,tiposDeEventoServiceAPI,$state,$rootScope) {
     $scope.eventos = [];
     $scope.tiposDeEventos = [];
     $scope.fromDate = null;
     $scope.toDate = null;
-
     var carregarEventos = function () {
         eventosFactoryAPI.getEventos().success(function (data) {
             $scope.eventos = data;
@@ -58,6 +55,20 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
     $scope.orderBy = function (campo) {
         $scope.criteryOrder = campo;
         $scope.directionOrder = !$scope.directionOrder;
+    };
+
+    $scope.goTo = function (state,value) {
+        $state.go(state,value);
+    };
+
+    $rootScope.previous = undefined;
+    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+        //assign the "from" parameter to something
+        $rootScope.previous = from.name;
+    });
+
+    $rootScope.voltar = function(){
+        $scope.goTo($rootScope.previous)
     };
 
     carregarEventos();

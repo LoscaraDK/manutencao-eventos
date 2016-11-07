@@ -119,22 +119,5 @@
       "id": 3,
       "isFinal": "NÃO"
     }
-  },
-  {
-    "date": "2016-11-10T02:00:00.000Z",
-    "type": {
-      "eventType": "Pagamento de Juros",
-      "id": 1,
-      "isFinal": "NÃO"
-    },
-    "isIncorporaJuros": true
-  },
-  {
-    "date": "2016-11-11T02:00:00.000Z",
-    "type": {
-      "eventType": "Pagamento de Amortização",
-      "id": 3,
-      "isFinal": "NÃO"
-    }
   }
 ]

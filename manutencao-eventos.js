@@ -69,7 +69,7 @@ app.get('/manutencao-eventos/eventos', function(req, res) {
  
 app.post('/manutencao-eventos/addEvent', function(req, res) {
   var eventos = [];
-  var file = '/Desenvolvimento/workspace/manutencao-eventos/backend/eventos.json';
+  var file = __dirname + '/backend/eventos.json';
   
   jsonfile.readFile(file, function(err, obj) {
     eventos = obj;
@@ -86,7 +86,7 @@ app.post('/manutencao-eventos/addEvent', function(req, res) {
 
 app.post('/manutencao-eventos/removeEvents', function(req, res) {
   var eventos = req.body;
-  var file = '/Desenvolvimento/workspace/manutencao-eventos/backend/eventos.json';
+  var file = __dirname + '/backend/eventos.json';
   console.log(eventos);
   jsonfile.writeFile(file, eventos, {spaces: 2}, function(err) {
       if(err){

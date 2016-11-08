@@ -68,7 +68,7 @@ manutencaoEventosApp.controller('manutencaoEventosCtrl', function ($scope, $mdpD
     });
 
     $rootScope.voltar = function(){
-        $scope.goTo($rootScope.previous)
+        $scope.goTo($rootScope.previous);
     };
 
     carregarEventos();

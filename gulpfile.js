@@ -10,8 +10,8 @@ var runSequence = require("run-sequence");
 var rename = require("gulp-rename");
 var nodemon = require('gulp-nodemon');
 var spawn   = require('child_process');
-var bunyan   = require('bunyan');
 var bs = require('browser-sync');
+var reload = bs.reload;
 
 
 
@@ -56,7 +56,7 @@ gulp.task("copy",function(){
             .pipe(gulp.dest("dist/"));
 });
 
-gulp.task('run',['browser-sync'],function(cb) {
+gulp.task('run',function(cb) {
     var called = false; 
     var stream = nodemon({
         script: 'manutencao-eventos.js',
@@ -67,34 +67,16 @@ gulp.task('run',['browser-sync'],function(cb) {
         ],
         watch:    ['js/','lib/','view/','css/','partials/'],
         stdout:   true,
-        readable: true
+        readable: false
     });
-    stream.on('readable', function() {
- 
-        // free memory 
-        bunyan && bunyan.kill();
- 
-        bunyan = spawn('./node_modules/bunyan/bin/bunyan', [
-            '--output', 'short',
-            '--color'
-        ]);
- 
-        bunyan.stdout.pipe(process.stdout);
-        bunyan.stderr.pipe(process.stderr);
- 
-        this.stdout.pipe(bunyan.stdin);
-        this.stderr.pipe(bunyan.stdin);
-    });
-   
     stream.on('start', function () {
         if (!called) {
             called = true;
             cb();
         }
     })
-    .on('restart',['default'], function () {
+    .on('restart', function () {
             console.log('restarted!!!');
-            var reload = bs.reload;
             setTimeout(function () {
                 reload({ stream: false });
             }, 1000);
@@ -107,17 +89,18 @@ gulp.task('run',['browser-sync'],function(cb) {
       return stream;
 });
 
-gulp.task('browser-sync',function() {
+gulp.task('browser-sync',['run'],function() {
     return bs({
-        proxy: 'http://localhost:3000/manutencao-eventos',
-        port: 3000,
+        proxy: '127.0.0.1:3000/manutencao-eventos',
+        port: 5000,
         browser: ["firefox"],
-        notify: true
+        notify: true,
+        online: false
         
     });
 });
 
-gulp.task("default",function(){
+gulp.task("default",['browser-sync'],function(){
     return runSequence('clean',['jshint','uglify','htmlmin','cssmin','copy']);
 });
 

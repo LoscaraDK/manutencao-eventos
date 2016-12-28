@@ -102,6 +102,21 @@ app.get('/manutencao-eventos/tiposDeEvento', function(req, res) {
   //res.json(operadoras);
 });
 
+app.get('/manutencao-eventos/situacoesEvento', function(req, res) {
+  res.sendFile(__dirname + '/backend/situacoesevento.json');
+  //res.json(operadoras);
+});
+
+app.get('/manutencao-eventos/situacoesIF', function(req, res) {
+  res.sendFile(__dirname + '/backend/situacoesif.json');
+  //res.json(operadoras);
+});
+
+app.get('/manutencao-eventos/tiposIF', function(req, res) {
+  res.sendFile(__dirname + '/backend/tiposif.json');
+  //res.json(operadoras);
+});
+
 app.listen(app.get('port'), function(){
   console.log('Express started on http://localhost:' +
     app.get('port') + '; press Ctrl-C to terminate');

@@ -1,0 +1,7 @@
+[
+    {"descricao" : "CONFIRMADO" , "id": 1 },
+    {"descricao" : "EM ADITAMENTO" , "id": 2 },
+    {"descricao" : "BLOQUEADO" , "id": 3 },
+    {"descricao" : "EXCLUIDO" , "id": 4},
+    {"descricao" : "RESGATADO" , "id": 5 }
+]

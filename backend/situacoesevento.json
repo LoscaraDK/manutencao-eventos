@@ -1,0 +1,7 @@
+[
+    {"descricao" : "INFORMAR PU" , "id": 1 },
+    {"descricao" : "EVENTO NAO PROCESSADO" , "id": 2 },
+    {"descricao" : "EVENTO FINALIZADO" , "id": 3 },
+    {"descricao" : "INFORMAR PU PREFIXADO" , "id": 4},
+    {"descricao" : "FINALIZADO" , "id": 5 }
+]

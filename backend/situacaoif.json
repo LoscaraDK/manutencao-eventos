@@ -1,7 +1,0 @@
-[
-    {"situacaoIF" : "CONFIRMADO" , "id": 1 },
-    {"situacaoIF" : "EM ADITAMENTO" , "id": 2 },
-    {"situacaoIF" : "BLOQUEADO" , "id": 3 },
-    {"situacaoIF" : "EXCLUIDO" , "id": 4},
-    {"situacaoIF" : "RESGATADO" , "id": 5 }
-]

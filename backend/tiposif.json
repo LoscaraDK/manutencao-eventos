@@ -1,15 +1,15 @@
 [
-    {"tipoIF" : "CDB" , "id": 1 },
-    {"tipoIF" : "CCB" , "id": 2 },
-    {"tipoIF" : "DI", "id": 3 },
-    {"tipoIF" : "CCE" , "id": 4 },
-    {"tipoIF" : "NCE" , "id": 5 },
-    {"tipoIF" : "LCA" , "id": 6 },
-    {"tipoIF" : "LCI" , "id": 7 },
-    {"tipoIF" : "CPR" , "id": 8 },
-    {"tipoIF" : "CRP" , "id": 9 },
-    {"tipoIF" : "NCR" , "id": 10 },
-    {"tipoIF" : "LFS" , "id": 11},
-    {"tipoIF" : "LFSN" , "id": 12 },
-    {"tipoIF" : "LF" , "id": 13 }
+    {"descricao" : "CDB" , "id": 1 },
+    {"descricao" : "CCB" , "id": 2 },
+    {"descricao" : "DI", "id": 3 },
+    {"descricao" : "CCE" , "id": 4 },
+    {"descricao" : "NCE" , "id": 5 },
+    {"descricao" : "LCA" , "id": 6 },
+    {"descricao" : "LCI" , "id": 7 },
+    {"descricao" : "CPR" , "id": 8 },
+    {"descricao" : "CRP" , "id": 9 },
+    {"descricao" : "NCR" , "id": 10 },
+    {"descricao" : "LFS" , "id": 11},
+    {"descricao" : "LFSN" , "id": 12 },
+    {"descricao" : "LF" , "id": 13 }
 ]

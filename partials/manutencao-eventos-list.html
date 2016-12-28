@@ -34,16 +34,16 @@
 				<table class="table table-striped" ng-show="eventos.length > 0">
 					<tr>
 						<th><a class="classOrdem" ng-click="orderBy('date')">Data Original</a></th>
-						<th><a class="classOrdem" ng-click="orderBy('type.eventType')"> Tipo Evento</a></th>
+						<th><a class="classOrdem" ng-click="orderBy('type.descricao')"> Tipo Evento</a></th>
 						<th>Incorpora Juros?</th>
 						<th>Excluir?</th>
 					</tr>
 
 					<!-- O primeiro filtro, filtra tudo dentro de evento. 
 						O segundo filtro, filtra um atributo dentro de um objeto que esta dentro de outro objeto exemplo evento tem um objeto type que tem seus atributos.  -->
-					<tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterio | filter:{type:{eventType:criterioTipo}} | searchDatesBetween:fromDate:toDate | orderBy:criteryOrder:directionOrder">
+					<tr ng-class="{'selecionado negrito': evento.isRemove}" ng-repeat="evento in eventos | filter:criterio | filter:{type:{descricao:criterioTipo}} | searchDatesBetween:fromDate:toDate | orderBy:criteryOrder:directionOrder">
 						<td>{{evento.date | date: 'dd/MM/yyyy'}}</td>
-						<td>{{evento.type.eventType | uppercase}}</td>
+						<td>{{evento.type.descricao | uppercase}}</td>
 						<td><input type="checkbox" ng-model="evento.isIncorporaJuros" class="checkbox"></input>
 						</td>
 						<td><input type="checkbox" ng-model="evento.isRemove" class="checkbox"></input>
@@ -62,11 +62,11 @@
 							</mdp-date-picker>
 						</td>
 						<td>
-							<!--select class="form-control" ng-model="evento.type" ng-options="tipoDeEvento.eventType group by tipoDeEvento.isFinal for tipoDeEvento in tiposDeEventos" >
+							<!--select class="form-control" ng-model="evento.type" ng-options="tipoDeEvento.descricao group by tipoDeEvento.isFinal for tipoDeEvento in tiposDeEventos" >
 <option value="">--- Selecione um evento ---</option>
 </select-->
 							<div class="seleciona-evento">
-								<select class="form-control" ng-model="evento.type" name="type" ng-options="tipoDeEvento.eventType for tipoDeEvento in tiposDeEventos | orderBy:'eventType'"
+								<select class="form-control" ng-model="evento.type" name="type" ng-options="tipoDeEvento.descricao for tipoDeEvento in tiposDeEventos | orderBy:'descricao'"
 									ng-required="true">
 										<option value="">--- Selecione um evento ---</option>
 								</select>

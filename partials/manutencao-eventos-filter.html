@@ -8,17 +8,17 @@
                 <input class="form-control" type="text" ng-model="codAgPagamento" id="codAgPagamento" placeholder="Digite a conta do Agente de Pagamento?"></input>
                 <input class="form-control" type="text" ng-model="nomeRegistrador" id="nomeRegistrador" placeholder="Digite o nome do Registrador?"></input>
                 <input class="form-control" type="text" ng-model="codRegistrador" id="codRegistrador" placeholder="Digite a conta do Registrador?"></input>
-                <select class="form-control" ng-model="tipoIF" id="tipoIF">
+                <select class="form-control" ng-model="tipoIF" id="tipoIF" ng-options="tipoIF.descricao for tipoIF in tiposIF | orderBy:'descricao'">
                     <option value="">--- Selecione um tipo de if ---</option>
                 </select>
-                <select class="form-control" ng-model="sitIF" id="sitIF">
+                <select class="form-control" ng-model="sitIF" id="sitIF" ng-options="situacaoIF.descricao for situacaoIF in situacoesInstrumentoFinanceiro | orderBy:'descricao'">
                     <option value="">--- Selecione um tipo de situação ---</option>
                 </select>
                 <input class="form-control" type="text" ng-model="codIF" id="codIF" placeholder="Digite o Código do Instrumento Financeiro?"></input>
-                <select class="form-control" ng-model="tpEvento" id="tpEvento">
+                <select class="form-control" ng-model="tpEvento" id="tpEvento" ng-options="tipoEvento.descricao for tipoEvento in tiposEvento | orderBy:'descricao'">
                     <option value="">--- Escolha o Tipo de Evento ---</option>
                 </select>
-                <select class="form-control" ng-model="sitEvento" id="sitEvento">
+                <select class="form-control" ng-model="sitEvento" id="sitEvento" ng-options="situacaoEvento.descricao for situacaoEvento in situacoesEvento | orderBy:'descricao'">
                     <option value="">--- Escolha a situação do evento ---</option>
                 </select>
 
